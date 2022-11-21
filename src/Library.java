@@ -1,6 +1,71 @@
+import java.util.*;
+
 public class Library {
     // Add the missing implementation to this class
+//instance variables
+    String address;
+    ArrayList<Book> books;
 
+    //Creates a new Library
+    public Library(String LibraryAddress){
+        address = LibraryAddress;
+        books = new ArrayList<>();
+    }
+
+    //prints the opeing hours
+    public static void printOpeningHours(){
+        System.out.println ("Libraries are open daily from 9am to 5pm.");
+    }
+
+    //prints the address
+    public void printAddress(){
+        System.out.println (address);
+    }
+
+    //method to add a book to the Library
+    public void addBook(Book book){
+        books.add(book);
+    }
+
+    //method to borrow a book from the Library
+    public void borrowBook(String title){
+        for(int i=0; i<books.size(); i++){
+            if(books.get(i).getTitle().equals(title)){
+                if(books.get(i).isBorrowed()){
+                    System.out.println ("Sorry, this book is already borrowed.");
+                }else {
+                    books.get(i).rented();
+                    System.out.println ("You successfully borrowed " + title);
+                }
+                return;
+            }
+        }
+        System.out.println ("Sorry, this book is not in our catalog.");
+    }
+
+    //method to print all the available books of the Library
+    public void printAvailableBooks(){
+        if(books.size()==0){
+            System.out.println ("No book in catalog");
+            return;
+        }
+        for(int i=0; i<books.size(); i++){
+            if(!books.get(i).isBorrowed())
+                System.out.println (books.get(i).getTitle());
+        }
+    }
+
+    //method to return a book to the Library
+    public void returnBook(String title){
+        for(int i=0; i<books.size(); i++){
+            Book b = books.get(i);
+            if(b.isBorrowed() && b.getTitle().equals(title)){
+                books.get(i).returned();
+                System.out.println ("You successfully returned " + title);
+                break;
+            }
+        }
+    }
     public static void main(String[] args) {
         // Create two libraries
         Library firstLibrary = new Library("10 Main St.");
